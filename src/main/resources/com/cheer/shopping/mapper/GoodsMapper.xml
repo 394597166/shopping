@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        <!--namespace对应的dao接口-->
+<mapper namespace="com.cheer.shopping.mapper.GoodsMapper">
+    <!-- id是方法名 #{id}是方法参数 -->
+    <select id="getGoods" resultMap="Goods">
+        select * from goods where goods_id = #{goods_id}
+    </select>
+    <select id="getAllGoods" resultMap="Goods">
+        select * from goods
+    </select>
+    <resultMap id="Goods" type="Goods">
+        <id property="goodsId" column="goods_id"></id>
+        <result property="goodsName" column="goods_name"></result>
+        <result property="goodsPrice" column="goods_price"></result>
+        <result property="goodsInventory" column="goods_inventory"></result>
+    </resultMap>
+    <select id="getGoodsWithLikeName" resultMap="Goods">
+        select * from goods where goods_name like #{goodsName}
+    </select>
+    <update id="updateGoods">
+        update goods set goods_inventory = #{goodsInventory} where goods_id = #{goodsId}
+    </update>
+    <update id="updateinventory">
+        update goods set goods_inventory = #{goodsInventoyr} where goods_name = #{goodsName}
+    </update>
+    <select id="getinventory" resultType="Integer">
+        select goods_inventory from goods where goods_name = #{goodsName}
+    </select>
+</mapper>

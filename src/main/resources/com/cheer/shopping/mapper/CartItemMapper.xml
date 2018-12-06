@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        <!--namespace对应的dao接口-->
+<mapper namespace="com.cheer.shopping.mapper.CartItemMapper">
+    <!-- id是方法名 #{id}是方法参数 -->
+    <select id="getCartItem" resultMap="CartItem">
+        select * from cartitem where cart_id = #{cartId}
+    </select>
+    <resultMap id="CartItem" type="CartItem">
+        <id property="cartItemId" column="item_id"></id>
+        <result property="cartItemAmount" column="item_amount"></result>
+        <association property="goods" javaType="Goods" fetchType="lazy" column="goods_id" select="com.cheer.shopping.mapper.GoodsMapper.getGoods"></association>
+    </resultMap>
+    <insert id="insertCartItem">
+        insert into cartitem value (#{itemId},#{goodsId},#{cartId},#{itemAmount})
+    </insert>
+    <delete id="deleteCartItem">
+        delete from cartitem where item_id = #{itemId}
+    </delete>
+    <update id="updateCartItem">
+        update cartitem set item_amount = #{cartItemAmount} where item_id = #{cartItemId}
+    </update>
+</mapper>

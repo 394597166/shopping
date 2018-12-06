@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        <!--namespace对应的dao接口-->
+<mapper namespace="com.cheer.shopping.mapper.OrderMapper">
+    <!-- id是方法名 #{id}是方法参数 -->
+    <select id="getOrder" resultMap="Order">
+        select * from `order` where user_id = #{userId}
+    </select>
+    <resultMap id="Order" type="Order">
+        <id property="orderId" column="order_id"></id>
+        <result property="orderCreate" column="order_create"></result>
+        <result property="address" column="order_address"></result>
+        <result property="goodsTotal" column="goodsTotal"></result>
+        <result property="fee" column="fee"></result>
+        <result property="priceTotal" column="priceTotal"></result>
+        <result property="state" column="state"></result>
+        <collection property="orderItemList" column="order_id" ofType="OrderItem" fetchType="lazy" select="com.cheer.shopping.mapper.OrderItemMapper.getOrderItem"></collection>
+    </resultMap>
+    <insert id="insertOrder">
+        insert into `order` values (#{orderId},#{orderCreate},#{orderAddress},#{goodsTotal},#{fee},#{priceTotal},#{userId},#{state})
+    </insert>
+    <select id="getPriceTotal" resultType="Double">
+        select priceTotal from `order` where order_id = #{orderId}
+    </select>
+    <update id="updateState">
+        update `order` set state = "pay" where order_id = #{orderId}
+    </update>
+    <delete id="deleteorder">
+        delete from `order` where order_id = #{orderId}
+    </delete>
+    <select id="getState" resultType="String">
+        select state from `order` where order_id = #{orderId}
+    </select>
+</mapper>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        <!--namespace对应的dao接口-->
+<mapper namespace="com.cheer.shopping.mapper.OrderItemMapper">
+    <!-- id是方法名 #{id}是方法参数 -->
+    <select id="getOrderItem" resultMap="OrderItem">
+        select * from orderitem where order_id = #{orderId}
+    </select>
+    <resultMap id="OrderItem" type="OrderItem">
+        <id property="orderItemId" column="orderitem_id"></id>
+        <result property="goodsName" column="goods_name"></result>
+        <result property="goodsPrice" column="goods_price"></result>
+        <result property="goodsId" column="goods_id"></result>
+        <result property="goodsInventory" column="goods_inventory"></result>
+    </resultMap>
+    <insert id="insertOrderItem">
+        insert into orderitem values (#{orderItemId},#{goodsName},#{goodsPrice},#{goodsId},#{goodsInventory},#{orderId})
+    </insert>
+    <delete id="deleteOrderItem">
+        delete from orderitem where orderitem_id = #{orderItemId}
+    </delete>
+    <select id="getGoodsName" resultType="String">
+        select goods_name from orderitem where order_id = #{orderItemId}
+    </select>
+    <select id="getGoodsInventory" resultType="Integer">
+        select goods_Inventory from orderitem where order_id = #{orderItemId}
+    </select>
+    <select id="getNameAndInventory" resultType="Map">
+        select orderitem_id,goods_name,goods_Inventory from orderitem where order_id = #{orderItemId}
+    </select>
+</mapper>

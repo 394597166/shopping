@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        <!--namespace对应的dao接口-->
+<mapper namespace="com.cheer.shopping.mapper.UserMapper">
+    <!-- id是方法名 #{id}是方法参数 -->
+    <select id="getName" resultType="String">
+        select user_name from user where user_id = #{userId}
+    </select>
+    <select id="getPassWord" resultType="String">
+        select user_password from user where user_id = #{userId}
+    </select>
+    <select id="getNameAndPassWord" resultType="Map">
+        select user_name,user_password from user where user_id = #{userId}
+    </select>
+    <select id="getIdAndNameAndPassWordwithName" resultType="Map">
+        select * from user where user_name = #{userName}
+    </select>
+    <select id="getUserAll" resultMap="UserAll">
+        select * from user where user_id = #{userId}
+    </select>
+    <resultMap id="UserAll" type="User">
+        <id property="userId" column="user_id"></id>
+        <result property="userName" column="user_name"></result>
+        <result property="userPassWord" column="user_password"></result>
+        <result property="money" column="money"></result>
+        <association property="cart" column="user_id" javaType="Cart" fetchType="lazy" select="com.cheer.shopping.mapper.CartMapper.getCart"></association>
+        <collection property="addressList" column="user_id" ofType="Address" fetchType="lazy" select="com.cheer.shopping.mapper.AddressMapper.getAddress"></collection>
+        <collection property="orderList" column="user_id" ofType="Order" fetchType="lazy" select="com.cheer.shopping.mapper.OrderMapper.getOrder"></collection>
+        <collection property="couponitemList" column="user_id" ofType="Couponitem" fetchType="lazy" select="com.cheer.shopping.mapper.CouponitemMapper.getCouponitem"></collection>
+    </resultMap>
+    <update id="updateUserPassWord">
+        update user set user_password = #{userPassWord} where user_id = #{userId}
+    </update>
+    <insert id="createUser">
+        insert into user set user_id = #{userId},user_name = #{userName},user_password = #{userPassWord},money = 0
+    </insert>
+    <update id="updateMoney">
+        update user set money = #{money} where user_id = #{userId}
+    </update>
+</mapper>

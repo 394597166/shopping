@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        <!--namespace对应的dao接口-->
+<mapper namespace="com.cheer.shopping.mapper.AddressMapper">
+    <!-- id是方法名 #{id}是方法参数 -->
+    <select id="getAddress" resultType="Map">
+        select * from address where user_id = #{userId}
+    </select>
+    <resultMap id="Address" type="Address">
+        <id property="addressId" column="address_id"></id>
+        <result property="addressDistrict" column="address_district"></result>
+        <result property="addressAddressee" column="address_addressee"></result>
+        <result property="addressDetailed" column="address_detailed"></result>
+        <result property="addressPhone" column="address_phone"></result>
+        <result property="addressTelephone" column="address_telephone"></result>
+        <result property="addressMailbox" column="address_mailbox"></result>
+        <result property="addressAlias" column="address_alias"></result>
+       </resultMap>
+    <insert id="insertAddress" >
+        insert into address set address_id = #{addressId},address_addressee = #{addressAddressee},address_detailed = #{addressDetailed},address_phone = #{addressPhone},address_telephone = #{addressTelephone},address_mailbox = #{addressMailbox},address_alias = #{addressAlias},user_id = #{userId}
+    </insert>
+
+    <update id="insertUserId">
+        update address set user_id = #{userId} where address_id = #{addressId}
+    </update>
+    <delete id="deleteAddress">
+        delete from address where address_id = #{addressId}
+    </delete>
+    <update id="updateAddress">
+        update address set address_addressee = #{addressAddressee},address_detailed = #{addressDetailed},address_phone = #{addressPhone},address_telephone = #{addressTelephone},address_mailbox = #{addressMailbox},address_alias = #{addressAlias} where address_id = #{addressId}
+    </update>
+</mapper>

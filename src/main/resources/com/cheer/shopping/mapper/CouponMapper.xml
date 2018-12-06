@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        <!--namespace对应的dao接口-->
+<mapper namespace="com.cheer.shopping.mapper.CouponMapper">
+    <!-- id是方法名 #{id}是方法参数 -->
+    <select id="getCoupon" resultMap="Coupon">
+        select * from coupon where coupon_id = #{couponId}
+    </select>
+    <resultMap id="Coupon" type="Coupon">
+        <id property="couponId" column="coupon_id"></id>
+        <result property="full" column="full"></result>
+        <result property="minus" column="minus"></result>
+    </resultMap>
+    <select id="getAllCoupon" resultType="Map">
+        select * from coupon
+    </select>
+    <select id="getcouponId" resultType="Integer">
+        select coupon_id from coupon where full = #{full} and minus = #{minus}
+    </select>
+</mapper>
